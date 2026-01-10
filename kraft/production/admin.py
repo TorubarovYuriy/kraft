@@ -4,6 +4,32 @@ from .models import (
 )
 
 
+class OrderAdmin(admin.ModelAdmin):
+    list_display = ('name', 'count')
+
+
+class RollAdmin(admin.ModelAdmin):
+    list_display = (
+        'number', 'weight', 'order'
+    )
+    list_editable = ('weight',)
+
+
+class WorkingShiftAdmin(admin.ModelAdmin):
+    list_display = (
+        'date', 'machine', 'plan', 'done', 'marriage'
+    )
+    list_editable = (
+        'done', 'marriage'
+    )
+    empty_value_display = 'Не задано'
+    filter_horizontal = ('users', 'rolls',)
+
+
 admin.site.register(
-    [Machine, Order, Roll, Clue, Work, Marriage, Box, WorkingShift]
+    [Machine, Clue, Work, Marriage, Box]
 )
+
+admin.site.register(Order, OrderAdmin)
+admin.site.register(Roll, RollAdmin)
+admin.site.register(WorkingShift, WorkingShiftAdmin)
