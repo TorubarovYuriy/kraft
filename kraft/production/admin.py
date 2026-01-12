@@ -1,6 +1,7 @@
 from django.contrib import admin
 from .models import (
-    Machine, Order, Roll, Clue, Work, Marriage, Box, WorkingShift
+    Machine, Order, Roll, Clue, Work, Marriage, Box, WorkingShift, 
+    MarriageCount,
 )
 
 
@@ -17,13 +18,19 @@ class RollAdmin(admin.ModelAdmin):
 
 class WorkingShiftAdmin(admin.ModelAdmin):
     list_display = (
-        'date', 'machine', 'plan', 'done', 'marriage'
+        'date', 'machine', 'plan', 'done',
     )
     list_editable = (
-        'done', 'marriage'
+        'done',
     )
     empty_value_display = 'Не задано'
-    filter_horizontal = ('users', 'rolls',)
+    filter_horizontal = ('users', 'rolls', 'work')
+
+
+class MarriageCountAdmin(admin.ModelAdmin):
+    list_display = (
+        'working_shift', 'marriage', 'count_pieces', 'count_weight'
+    )
 
 
 admin.site.register(
@@ -33,3 +40,4 @@ admin.site.register(
 admin.site.register(Order, OrderAdmin)
 admin.site.register(Roll, RollAdmin)
 admin.site.register(WorkingShift, WorkingShiftAdmin)
+admin.site.register(MarriageCount, MarriageCountAdmin)

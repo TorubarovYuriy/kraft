@@ -1,3 +1,4 @@
+from datetime import time
 from django.db import models
 from django.contrib.auth import get_user_model
 
@@ -6,6 +7,7 @@ MAX_LENGTH_NAME = 255
 DEFAULT_PLAN_DAY = 48000
 
 USER = get_user_model()
+
 
 class Machine(models.Model):
     """
@@ -22,15 +24,20 @@ class Machine(models.Model):
         verbose_name = 'Машина'
         verbose_name_plural = 'Машины'
 
+
 class Order(models.Model):
     """
     Docstring для Order
         name - название заказа
         count - количество
+        weight_one_piece - вес одной шт.
     Класс описывает заказы на производстве.
     """
     name = models.CharField('Имя', max_length=MAX_LENGTH_NAME)
     count = models.IntegerField('Количество')
+    weight_one_piece = models.IntegerField(
+        'вес одной шт. в граммах', null=True
+    )
 
     def __str__(self):
         return self.name
@@ -55,7 +62,7 @@ class Roll(models.Model):
     number = models.IntegerField('Номер')
 
     def __str__(self):
-        return self.order.name
+        return f'№ {self.number}. {self.order},  вес {self.weight}'
 
     class Meta:
         verbose_name = 'Рулон'
@@ -74,7 +81,7 @@ class Clue(models.Model):
 
     def __str__(self):
         return self.name
-    
+
     class Meta:
         verbose_name = 'Клей'
         verbose_name_plural = 'Клеи'
@@ -87,7 +94,7 @@ class Work(models.Model):
     Класс описывает виды работ на производстве.
     """
     name = models.CharField('Название', max_length=MAX_LENGTH_NAME)
-    
+
     def __str__(self):
         return self.name
 
@@ -132,8 +139,9 @@ class MarriageCount(models.Model):
     """
     Docstring для MarriageCount
         marriage - вид брака
-        count - количество
         working_shift - рабочая смена
+        count_pieces - количество штук
+        count_weight - количество гр.
     Класс описывает виды брака на производстве.
     """
     marriage = models.ForeignKey(
@@ -146,8 +154,8 @@ class MarriageCount(models.Model):
     count_weight = models.IntegerField('Количество в гр.')
 
     def __str__(self):
-        return f'{self.marriage.name} {self.count}'
-    
+        return f'{self.marriage.name}'
+
     class Meta:
         verbose_name = 'Вид брака'
         verbose_name_plural = 'Виды брака'
@@ -175,16 +183,18 @@ class WorkingShift(models.Model):
     Класс описывает рабочую смену на производстве.
     """
     date = models.DateField('Дата')
-    time_start = models.TimeField('Время начало смены')
-    time_end = models.TimeField('Время конца смены')
-    time_delta = models.IntegerField('Время смены')
+    time_start = models.TimeField('Время начало смены', default=time(8, 0))
+    time_end = models.TimeField('Время конца смены', default=time(17, 0))
+    time_delta = models.IntegerField('Время смены', default=8)
     machine = models.ForeignKey(
         Machine, on_delete=models.CASCADE, null=True, verbose_name='агрегат'
     )
     users = models.ManyToManyField(
         USER, verbose_name='Сотрудники', blank=True, default=None
     )
-    order = models.ForeignKey(Order, on_delete=models.CASCADE, null=True)
+    order = models.ForeignKey(
+        Order, on_delete=models.CASCADE, null=True, verbose_name='заказ'
+    )
     work = models.ManyToManyField(Work, verbose_name='Работы')
     plan = models.IntegerField('План', null=True, default=DEFAULT_PLAN_DAY)
     done = models.IntegerField('Выполнено', null=True)
@@ -204,7 +214,7 @@ class WorkingShift(models.Model):
 
     def __str__(self):
         return f'Смена от {self.date}.'
-    
+
     class Meta:
         verbose_name = 'Рабочая смена'
         verbose_name_plural = 'Рабочие смены'
