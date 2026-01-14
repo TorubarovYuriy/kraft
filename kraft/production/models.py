@@ -17,12 +17,12 @@ class Machine(models.Model):
     """
     name = models.CharField('Название', max_length=MAX_LENGTH_NAME)
 
-    def __str__(self):
-        return self.name
-
     class Meta:
         verbose_name = 'Машина'
         verbose_name_plural = 'Машины'
+
+    def __str__(self):
+        return self.name
 
 
 class Order(models.Model):
@@ -39,12 +39,12 @@ class Order(models.Model):
         'вес одной шт. в граммах', null=True
     )
 
-    def __str__(self):
-        return self.name
-
     class Meta:
         verbose_name = 'Заказ'
         verbose_name_plural = 'Заказы'
+
+    def __str__(self):
+        return self.name
 
 
 class Roll(models.Model):
@@ -61,12 +61,12 @@ class Roll(models.Model):
     weight = models.IntegerField('Вес')
     number = models.IntegerField('Номер')
 
-    def __str__(self):
-        return f'№ {self.number}. {self.order},  вес {self.weight}'
-
     class Meta:
         verbose_name = 'Рулон'
         verbose_name_plural = 'Рулоны'
+
+    def __str__(self):
+        return f'№ {self.number}. {self.order},  вес {self.weight}'
 
 
 class Clue(models.Model):
@@ -79,12 +79,12 @@ class Clue(models.Model):
     name = models.CharField('Название', max_length=MAX_LENGTH_NAME)
     weight = models.IntegerField('Вес')
 
-    def __str__(self):
-        return self.name
-
     class Meta:
         verbose_name = 'Клей'
         verbose_name_plural = 'Клеи'
+
+    def __str__(self):
+        return self.name
 
 
 class Work(models.Model):
@@ -95,12 +95,12 @@ class Work(models.Model):
     """
     name = models.CharField('Название', max_length=MAX_LENGTH_NAME)
 
-    def __str__(self):
-        return self.name
-
     class Meta:
         verbose_name = 'Работа'
         verbose_name_plural = 'Работы'
+
+    def __str__(self):
+        return self.name
 
 
 class Marriage(models.Model):
@@ -111,12 +111,12 @@ class Marriage(models.Model):
     """
     name = models.CharField('Название', max_length=MAX_LENGTH_NAME)
 
-    def __str__(self):
-        return self.name
-
     class Meta:
         verbose_name = 'Брак'
         verbose_name_plural = 'Браки'
+
+    def __str__(self):
+        return self.name
 
 
 class Box(models.Model):
@@ -127,12 +127,12 @@ class Box(models.Model):
     """
     name = models.CharField('Название', max_length=MAX_LENGTH_NAME)
 
-    def __str__(self):
-        return self.name
-
     class Meta:
         verbose_name = 'Коробка'
         verbose_name_plural = 'Коробки'
+
+    def __str__(self):
+        return self.name
 
 
 class MarriageCount(models.Model):
@@ -153,12 +153,12 @@ class MarriageCount(models.Model):
     count_pieces = models.IntegerField('Количество в шт')
     count_weight = models.IntegerField('Количество в гр.')
 
-    def __str__(self):
-        return f'{self.marriage.name}'
-
     class Meta:
         verbose_name = 'Вид брака'
         verbose_name_plural = 'Виды брака'
+
+    def __str__(self):
+        return f'{self.marriage.name}'
 
 
 class WorkingShift(models.Model):
@@ -207,14 +207,16 @@ class WorkingShift(models.Model):
         Clue, on_delete=models.CASCADE, verbose_name='Клей',
         blank=True, null=True, default=None,
     )
-    count_clue = models.IntegerField('Количество клея кг.', null=True)
+    count_clue = models.IntegerField(
+        'Количество клея кг.', null=True, blank=True
+    )
     marriage = models.ManyToManyField(
         Marriage, verbose_name='Вид брака', through=MarriageCount
     )
 
-    def __str__(self):
-        return f'Смена от {self.date}.'
-
     class Meta:
         verbose_name = 'Рабочая смена'
         verbose_name_plural = 'Рабочие смены'
+
+    def __str__(self):
+        return f'Смена от {self.date}.'
