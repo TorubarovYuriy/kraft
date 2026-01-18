@@ -6,5 +6,5 @@ class KraftUser(AbstractUser):
     bio = models.TextField('Биография', blank=True)
     
     class Meta:
-        verbose_name = 'Полбзователь'
+        verbose_name = 'Пользователь'
         verbose_name_plural = 'Пользователи'

@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block title %} 
+Заполнение смены
+{% endblock %} 
+{% block content %}
+<div class="container mt-4">
+    <h1>Смены</h1>
+    <hr>
+    <div class="row">
+        <div class="col-md-4">
+            <ul>
+                {% for shift in working_shifts %}
+                    <div>{{ shift.date }}</div>
+                    <div>{{ shift.users }}</div>
+                    <div>{{ shift.machine }}</div>
+                {% empty %}
+                    <li>Нет доступных смен.</li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</div>
+{% endblock %}

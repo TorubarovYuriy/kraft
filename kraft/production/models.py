@@ -3,8 +3,8 @@ from django.db import models
 from django.contrib.auth import get_user_model
 
 
-MAX_LENGTH_NAME = 255
-DEFAULT_PLAN_DAY = 48000
+MAX_LENGTH_NAME: int = 255
+DEFAULT_PLAN_DAY: int = 48000
 
 USER = get_user_model()
 
