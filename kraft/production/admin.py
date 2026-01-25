@@ -67,3 +67,5 @@ admin.site.register(Order, OrderAdmin)
 admin.site.register(Roll, RollAdmin)
 admin.site.register(WorkingShift, WorkingShiftAdmin)
 admin.site.register(MarriageCount, MarriageCountAdmin)
+admin.site.site_header = 'Администрирование сайта'
+admin.site.site_title = 'Администрирование'
