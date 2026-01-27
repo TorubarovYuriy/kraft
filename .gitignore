@@ -135,6 +135,8 @@ dmypy.json
 .vscode
 
 static/
+static_dev/
+collected_static/
 media/
 kraft/kraft/__pycache__/settings.cpython-312.pyc
 kraft/kraft/__pycache__/settings.cpython-312.pyc

@@ -4,6 +4,8 @@ from .models import (
     MarriageCount,
 )
 
+admin.site.empty_value_display = 'Не задано'
+
 
 class OrderAdmin(admin.ModelAdmin):
     """
@@ -30,7 +32,7 @@ class MarriageInline(admin.TabularInline):
     Модель для отображения в WorkingShiftAdmin
     """
     model = MarriageCount
-    extra = 2
+    extra = 0
 
 
 class WorkingShiftAdmin(admin.ModelAdmin):
@@ -45,7 +47,6 @@ class WorkingShiftAdmin(admin.ModelAdmin):
     list_editable = (
         'done',
     )
-    empty_value_display = 'Не задано'
     filter_horizontal = ('users', 'rolls', 'work')
 
 

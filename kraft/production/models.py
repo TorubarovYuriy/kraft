@@ -37,7 +37,7 @@ class Order(models.Model):
     """
     name = models.CharField('Имя', max_length=MAX_LENGTH_NAME)
     count = models.IntegerField('Количество')
-    weight_one_piece = models.IntegerField(
+    weight_one_piece = models.FloatField(
         'вес одной шт. в граммах', null=True
     )
     package_size = models.CharField(

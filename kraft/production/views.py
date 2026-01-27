@@ -5,14 +5,7 @@ from .models import Clue, Machine, Order, WorkingShift
 
 class ProductionMainView(TemplateView):
     """Отображает главную страницу приложения 'production'."""
-    template_name = 'production/main.html'
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['machines'] = Machine.objects.all()
-        context['orders'] = Order.objects.all()
-        context['clues'] = Clue.objects.all()
-        return context
+    template_name = 'production/about.html'
 
 
 class MachineListView(ListView):
@@ -36,10 +29,17 @@ class MachineDetailView(DetailView):
 
 class OrderListView(ListView):
     model = Order
+    template_name = 'production/order.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['orders'] = Order.objects.all().order_by('-name')
+        return context
 
 
 class OrderDetailView(DetailView):
     model = Order
+    template_name = 'production/order_detail.html'
 
 
 class ClueListView(ListView):

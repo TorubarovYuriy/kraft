@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %} 
+    {{ order.name }}
+{% endblock %} 
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/index.css' %}">
+
+  <div class="col d-flex justify-content-center">
+    <div class="card" style="width: 40rem;">
+      <div class="card-body">
+        <h5 class="card-title title_yu">{{ order.name }}</h5>
+        <p class="card-text title_yu">
+            <h6>Тираж: {{ order.count }}</h6>
+            <h6>Вес одного пакета: {{ order.weight_one_piece }}</h6>
+            <h6>Размер пакета: {{ order.package_size }}</h6>
+        </p>
+      </div>
+    </div>
+  </div>
+{% endblock %}
