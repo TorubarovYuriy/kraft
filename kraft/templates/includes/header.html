@@ -1,31 +1,23 @@
 {% block header %}
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <div class="container">
-        <a class="navbar-brand green" href="{% url 'production:main' %}">Крафт</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        {% with request.resolver_match.view_name as view_name %}
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav">
-                <li class="nav-item">
-                    <a class="nav-link {% if view_name  == 'production:main' %}active{% endif %}" aria-current="page" href="{% url 'production:main' %}">О компании</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link {% if view_name  == 'production:machine_list' %}active{% endif %}" aria-current="page" href="{% url 'production:machine_list' %}">Машины</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link {% if view_name  == 'production:clue_list' %}active{% endif %}" aria-current="page" href="{% url 'production:clue_list' %}">Клей</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link {% if view_name  == 'production:order_list' %}active{% endif %}" aria-current="page" href="{% url 'production:order_list' %}">Заказы</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link {% if view_name  == 'production:working_shift' %}active{% endif %}" aria-current="page" href="{% url 'production:working_shift' %}">Смена</a>
-                </li>
-            </ul>
-        </div>
-        {% endwith %}
-    </div>
+<nav class="nav-main-header">
+  {% with request.resolver_match.view_name as view_name %}
+    <ul>
+      <li>
+        <a aria-current="page" href="{% url 'production:main' %}">О компании</a>
+      </li>
+      <li>
+        <a aria-current="page" href="{% url 'production:machine_list' %}">Машины</a>
+      </li>
+      <li>
+        <a aria-current="page" href="{% url 'production:clue_list' %}">Клей</a>
+      </li>
+      <li>
+        <a aria-current="page" href="{% url 'production:order_list' %}">Заказы</a>
+      </li>
+      <li>
+        <a aria-current="page" href="{% url 'production:working_shift' %}">Смена</a>
+      </li>
+    </ul>
+  {% endwith %}
 </nav>
 {% endblock %}

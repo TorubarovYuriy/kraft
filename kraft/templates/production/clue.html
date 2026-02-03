@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block title %} 
+Клей
+{% endblock %} 
+{% block content %}
+<div class="container mt-4">
+  <h1>Страница клея</h1>
+  <hr>
+
+  <div class="row">
+    <div>
+      <ul>
+        {% for clue in clues %}
+          {{ clue }}
+        {% empty %}
+          <li>Нет клея.</li>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+</div>
+{% endblock %}

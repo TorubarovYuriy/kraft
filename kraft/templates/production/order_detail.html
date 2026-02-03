@@ -8,12 +8,12 @@
 
   <div class="col d-flex justify-content-center">
     <div class="card" style="width: 40rem;">
-      <div class="card-body">
-        <h5 class="card-title title_yu">{{ order.name }}</h5>
-        <p class="card-text title_yu">
-            <h6>Тираж: {{ order.count }}</h6>
-            <h6>Вес одного пакета: {{ order.weight_one_piece }}</h6>
-            <h6>Размер пакета: {{ order.package_size }}</h6>
+      <div class="card-body title_yu">
+        <h5 class="card-title">{{ order.name }}</h5>
+        <p class="card-text">
+            <h6>Тираж: {{ order.count }} шт.</h6>
+            <h6>Вес одного пакета: {{ order.weight_one_piece }} гр.</h6>
+            <h6>Размер пакета: {{ order.package_size }} мм.</h6>
         </p>
       </div>
     </div>

@@ -3,21 +3,21 @@
 Заказы
 {% endblock %} 
 {% block content %}
-<div class="container mt-4">
-    <h1>Страница заказов производства</h1>
-    <hr>
+<div>
+  <h1>Страница заказов производства</h1>
+  <hr>
 
-    <div class="row">
-        <div class="col-md-4">
-            <h2><a href="{% url 'production:order_list' %}">Заказы</a></h2>
-            <ul>
-                {% for order in orders|slice:":5" %}
-                    <li><a href="{% url 'production:order_detail' pk=order.pk %}">{{ order.name }}</a></li>
-                {% empty %}
-                    <li>Нет доступных машин.</li>
-                {% endfor %}
-            </ul>
-        </div>
+  <div>
+    <div>
+      <h2><a href="{% url 'production:order_list' %}">Заказы</a></h2>
+      <ul>
+        {% for order in orders|slice:":5" %}
+          <li><a href="{% url 'production:order_detail' pk=order.pk %}">{{ order.name }}</a></li>
+        {% empty %}
+          <li>Нет заказов.</li>
+        {% endfor %}
+      </ul>
     </div>
+  </div>
 </div>
 {% endblock %}
