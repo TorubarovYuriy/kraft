@@ -3,21 +3,21 @@
 Заполнение смены
 {% endblock %} 
 {% block content %}
-<div class="container mt-4">
-    <h1>Смены</h1>
-    <hr>
-    <div class="row">
-        <div class="col-md-4">
-            <ul>
-                {% for shift in working_shifts %}
-                    <div>{{ shift.date }}</div>
-                    <div>{{ shift.users }}</div>
-                    <div>{{ shift.machine }}</div>
-                {% empty %}
-                    <li>Нет доступных смен.</li>
-                {% endfor %}
-            </ul>
-        </div>
-    </div>
-</div>
+<h1>Смены</h1>
+<section class="products">
+  {% for shift in working_shifts|slice:":6" %}
+  <article class="product-card">
+    <img src="#" alt="Здесь будет изображение">
+    <h3>{{ shift.date }}</h3>
+    <h4>{{ shift.machine }}</h4>
+    <p>Выполнено {{ shift.done }}</p>
+    <span>{{ shift.order }}</span>
+    <a href="#" class="btn-card">Подробнее</a>
+  </article>
+  {% empty %}
+    <li>Нет доступных смен.</li>
+  {% endfor %}
+  
+</section>
+
 {% endblock %}

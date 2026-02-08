@@ -3,21 +3,19 @@
 Заказы
 {% endblock %} 
 {% block content %}
-<div>
-  <h1>Страница заказов производства</h1>
-  <hr>
-
-  <div>
-    <div>
-      <h2><a href="{% url 'production:order_list' %}">Заказы</a></h2>
-      <ul>
-        {% for order in orders|slice:":5" %}
-          <li><a href="{% url 'production:order_detail' pk=order.pk %}">{{ order.name }}</a></li>
-        {% empty %}
-          <li>Нет заказов.</li>
-        {% endfor %}
-      </ul>
-    </div>
-  </div>
-</div>
+<h1>Заказы</h1>
+<section class="products">
+    {% for order in orders|slice:":6" %}
+    <article class="product-card">
+      <img src="#" alt="Здесь будет изображение">
+      <h3>{{ order.name }}</h3>
+      <h4>{{ order.count }}</h4>
+      <p>Размер пакета {{ order.package_size }}</p>
+      <span>Вес одного пакета {{ order.weight_one_piece }}гр.</span>
+      <a class="btn-card" href="{% url 'production:order_detail' pk=order.pk %}">Подробнее</a>
+    </article>
+    {% empty %}
+      <li>Нет заказов.</li>
+    {% endfor %}
+</section>
 {% endblock %}
