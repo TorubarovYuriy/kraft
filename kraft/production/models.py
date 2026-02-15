@@ -1,4 +1,4 @@
-from datetime import time
+from datetime import time, datetime, timedelta
 from django.db import models
 from django.contrib.auth import get_user_model
 
@@ -219,7 +219,9 @@ class WorkingShift(models.Model):
     date = models.DateField('Дата')
     time_start = models.TimeField('Время начало смены', default=time(8, 0))
     time_end = models.TimeField('Время конца смены', default=time(17, 0))
-    time_delta = models.IntegerField('Время смены', default=8)
+    time_delta = models.FloatField(
+        'Время смены (часы)', default=8, editable=False
+    )
     machine = models.ForeignKey(
         Machine, on_delete=models.SET_NULL, null=True, verbose_name='агрегат'
     )
@@ -263,3 +265,24 @@ class WorkingShift(models.Model):
 
     def __str__(self):
         return f'Смена от {self.date}.'
+
+    def save(self, *args, **kwargs):
+        """
+        Переопределяем метод save для автоматического вычисления
+        продолжительности смены.
+        """
+        if self.time_start and self.time_end:
+            # Создаем объекты datetime, используя любую дату
+            # (например, сегодняшнюю),
+            # так как для вычисления разницы важны только временные компоненты.
+            start_dt = datetime.combine(self.date, self.time_start)
+            end_dt = datetime.combine(self.date, self.time_end)
+
+            # Обрабатываем случай, когда смена переходит через полночь
+            if end_dt <= start_dt:
+                end_dt += timedelta(days=1)
+
+            duration = end_dt - start_dt
+            # Сохраняем продолжительность в часах как число с плавающей точкой
+            self.time_delta = duration.total_seconds() / 3600
+        super().save(*args, **kwargs)

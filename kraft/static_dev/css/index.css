@@ -24,14 +24,6 @@ body {
     "footer footer footer";
 }
 
-@media screen and (max-width: 768px) {
-
-    body {
-        background-color: rgb(160, 232, 181);
-        min-width: 550px;
-    }
-}
-
 .base_page header {
     grid-area: header;
     align-content: top;
@@ -48,6 +40,10 @@ body {
 }
 
 /* -------------- Header -------------- */
+
+.nav-toggle {
+    display: none;
+    }
 
 .nav-main-header {
     position: fixied;
@@ -142,4 +138,131 @@ body {
     transform: translateY(-5px) translateX(5px); /* подъем карточки на 5 пикселей */
 }
 
-/* -------------- Footer -------------- */
+/* -------------- Animation -------------- */
+
+@media screen and (max-width: 659px) {
+
+    body {
+        background-color: rgb(160, 232, 181);
+        min-width: 550px;
+    }
+    
+    /* --- Стили для анимированного меню --- */
+
+    /* Скрываем стандартный чекбокс */
+    .nav-toggle {
+    display: none;
+    }
+
+    /* Стили для кнопки-гамбургера (label) */
+    .nav-toggle-label {
+    position: fixed; /* Фиксируем относительно окна браузера */
+    top: 20px;
+    left: 20px;
+    width: 40px;
+    height: 40px;
+    background-color: #333;
+    border-radius: 50%; /* Делаем её круглой */
+    cursor: pointer;
+    z-index: 1001; /* Устанавливаем высокий z-index, чтобы кнопка была поверх всего */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    }
+
+    /* Полоски внутри гамбургера */
+    .nav-toggle-label span,
+    .nav-toggle-label span::before,
+    .nav-toggle-label span::after {
+    display: block;
+    background: white;
+    height: 2px;
+    width: 20px;
+    border-radius: 2px;
+    position: relative;
+    }
+
+    .nav-toggle-label span::before,
+    .nav-toggle-label span::after {
+    content: '';
+    position: absolute;
+    }
+
+    .nav-toggle-label span::before {
+    bottom: 6px;
+    }
+
+    .nav-toggle-label span::after {
+    top: 6px;
+    }
+
+
+    /* Стили для самой навигационной панели */
+    .nav-main-header {
+    position: fixed; /* Фиксируем, чтобы она занимала весь экран */
+    top: 0;
+    left: 0;
+    width: 100vw; /* 100% ширины окна */
+    height: 100vh; /* 100% высоты окна */
+    background-color: rgba(0, 0, 0, 0.9); /* Полупрозрачный фон */
+    z-index: 1000; /* Ниже чем кнопка, но выше остального контента */
+
+    /* --- Ключевая часть анимации --- */
+    /* Изначально "обрезаем" элемент до круга с нулевым радиусом в левом верхнем углу */
+    clip-path: circle(0% at 20px 20px);
+    /* Добавляем плавный переход для свойства clip-path */
+    transition: clip-path 0.5s ease-in-out;
+
+    /* Скрываем меню по умолчанию, чтобы оно не мешало */
+    visibility: hidden;
+    }
+
+    /* Центрируем список ссылок внутри панели */
+    .nav-main-header ul {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    list-style: none;
+    text-align: center;
+    padding: 0;
+    }
+
+    .nav-main-header ul li {
+    margin-bottom: 2rem;
+    }
+
+    .nav-main-header ul li a {
+    color: white;
+    text-decoration: none;
+    font-size: 1.5rem;
+    font-weight: bold;
+    }
+
+    /* --- Логика открытия/закрытия --- */
+
+    /* Когда чекбокс :checked (т.е. мы кликнули на label) */
+    .nav-toggle:checked ~ .nav-main-header {
+    /* "Раскрываем" круг до размера, который точно покроет весь экран */
+    clip-path: circle(150% at 20px 20px);
+    /* Делаем меню видимым */
+    visibility: visible;
+    }
+
+    /* Анимация превращения гамбургера в крестик */
+    .nav-toggle:checked ~ .nav-toggle-label span {
+    background: transparent; /* Центральная полоска исчезает */
+    }
+
+    .nav-toggle:checked ~ .nav-toggle-label span::before {
+    transform: rotate(45deg);
+    bottom: 0;
+    }
+
+    .nav-toggle:checked ~ .nav-toggle-label span::after {
+    transform: rotate(-45deg);
+    top: 0;
+    }
+
+/* --------- End of media --------- */
+}

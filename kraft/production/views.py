@@ -1,7 +1,10 @@
 from typing import Any
 from django.views.generic import DetailView, ListView, TemplateView
+from django.shortcuts import redirect, render, get_object_or_404
+from django.urls import reverse
 
 from .models import Clue, Machine, Order, WorkingShift
+from .forms import WorkingShiftForm
 
 
 class ProductionMainView(TemplateView):
@@ -65,3 +68,43 @@ class WorkingShiftListView(ListView):
         context = super().get_context_data(**kwargs)
         context['working_shifts'] = WorkingShift.objects.all()
         return context
+
+# ******************
+
+
+def working_shift_create(request):
+    """Представление для создания новой рабочей смены."""
+    if request.method == 'POST':
+        form = WorkingShiftForm(request.POST)
+        if form.is_valid():
+            form.save()
+            # Перенаправляем на страницу со списком смен после успешного создания
+            return redirect('production:working_shift_list') # Убедитесь, что у вас есть такой url name
+    else:
+        form = WorkingShiftForm()
+
+    context = {
+        'form': form,
+        'title': 'Добавление новой смены'
+    }
+    return render(request, 'production/working_shift_form.html', context)
+
+
+# Вы также можете создать view для редактирования
+def working_shift_edit(request, pk):
+    """Представление для редактирования существующей смены."""
+    shift = get_object_or_404(WorkingShift, pk=pk)
+    if request.method == 'POST':
+        form = WorkingShiftForm(request.POST, instance=shift)
+        if form.is_valid():
+            form.save()
+            return redirect('production:working_shift_list')
+    else:
+        form = WorkingShiftForm(instance=shift)
+
+    context = {
+        'form': form,
+        'title': f'Редактирование смены от {shift.date}',
+        'is_edit': True
+    }
+    return render(request, 'production/working_shift_form.html', context)

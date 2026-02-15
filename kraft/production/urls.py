@@ -24,4 +24,12 @@ urlpatterns = [
     path(
         'shift/', views.WorkingShiftListView.as_view(), name='working_shift'
     ),
+    path(
+        'shift/create/', views.working_shift_create,
+        name='working_shift_create'
+    ),
+    path(
+        'shift/<int:pk>/edit/', views.working_shift_edit,
+        name='working_shift_edit'
+    ),
 ]

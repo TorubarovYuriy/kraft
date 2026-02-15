@@ -1,5 +1,11 @@
 {% block header %}
-<nav class="nav-main-header">
+{# Скрытый чекбокс для управления состоянием меню #}
+<input type="checkbox" id="nav-toggle" class="nav-toggle">
+{# Кнопка-гамбургер для открытия/закрытия #}
+<label for="nav-toggle" class="nav-toggle-label">
+  <span></span>
+</label>
+<nav class="nav-main-header" id="main-nav">
   {% with request.resolver_match.view_name as view_name %}
     <ul>
       <li>
