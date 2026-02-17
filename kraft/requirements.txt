@@ -1,0 +1,4 @@
+asgiref
+Django
+python-dotenv
+sqlparse

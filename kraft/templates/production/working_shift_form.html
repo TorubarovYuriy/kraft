@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block content %}
+<div class="container">
+  <h1>{{ title }}</h1>
+  <form method="post" novalidate>
+    {% csrf_token %}
+
+    {# Выводим поля формы. as_p обернет каждое поле в тег <p> #}
+    {{ form.as_p }}
+
+    <button type="submit" class="btn btn-primary">
+      {% if is_edit %}
+        Сохранить изменения
+      {% else %}
+        Добавить смену
+      {% endif %}
+    </button>
+    <a href="{% url 'production:working_shift' %}" class="btn btn-secondary">Отмена</a>
+  </form>
+</div>
+{% endblock %}

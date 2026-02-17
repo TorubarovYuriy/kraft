@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block title %} 
+Производство
+{% endblock %} 
+{% block content %}
+<div class="content_main">
+  <h1>Главная страница производства</h1>
+  <form method="post">
+    {% csrf_token %}
+    <article>
+      <p>{{ form.instance.date }}</p>
+      <h3>{{ form.instance.order }}</h3>
+    </article>
+    <button>Отправить</button>
+  </form>
+</div>
+{% endblock %}

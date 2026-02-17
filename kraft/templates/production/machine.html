@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block title %} 
+Оборудование на производстве
+{% endblock %} 
+{% block content %}
+<div class="content_main">
+  <h1>Оборудование</h1>
+  <section class="products">
+    {% for machine in machines|slice:":5" %}
+    <article class="product-card">
+      <h3>{{ machine }}</h3>
+      <a class="btn-card" href="{% url 'production:machine_detail' pk=machine.pk %}">Подробнее</a>
+    </article>
+    {% empty %}
+      <li>Нет доступных машин.</li>
+    {% endfor %}
+  </section>
+</div>
+{% endblock %}

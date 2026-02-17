@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block title %} 
+Клей
+{% endblock %} 
+{% block content %}
+<div class="content_main">
+  <h1>Страница клея</h1>
+  <section class="products">
+    {% for clue in clues %}
+    <article class="product-card">
+      {{ clue }}
+      <a class="btn-card" href="{% url 'production:clue_detail' pk=clue.pk %}">Подробнее</a>
+    </article>
+    {% empty %}
+      <li>Нет клея.</li>
+    {% endfor %}
+  </section>
+</div>
+{% endblock %}

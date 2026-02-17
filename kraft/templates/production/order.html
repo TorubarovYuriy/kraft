@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block title %} 
+Заказы
+{% endblock %} 
+{% block content %}
+<div class="content_main">
+  <h1>Заказы</h1>
+  <section class="products">
+    {% for order in orders|slice:":6" %}
+    <article class="product-card">
+      <img src="#" alt="Здесь будет изображение">
+      <h3>{{ order.name }}</h3>
+      <h4>{{ order.count }}</h4>
+      <p>Размер пакета {{ order.package_size }}</p>
+      <span>Вес одного пакета {{ order.weight_one_piece }}гр.</span>
+      <a class="btn-card" href="{% url 'production:order_detail' pk=order.pk %}">Подробнее</a>
+    </article>
+    {% empty %}
+      <li>Нет заказов.</li>
+    {% endfor %}
+  </section>
+</div>
+{% endblock %}
