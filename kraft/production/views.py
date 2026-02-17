@@ -4,12 +4,33 @@ from django.shortcuts import redirect, render, get_object_or_404
 from django.urls import reverse
 
 from .models import Clue, Machine, Order, WorkingShift
-from .forms import WorkingShiftForm
+from .forms import WorkingShiftForm, WorkingShiftEditForm
 
 
 class ProductionMainView(TemplateView):
     """Отображает главную страницу приложения 'production'."""
     template_name = 'production/about.html'
+    form_class = WorkingShiftEditForm
+
+    def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Производство'
+        context['forms'] = WorkingShiftEditForm()
+        return context
+
+    def get(self, request, *args, **kwargs):
+        context = self.get_context_data(**kwargs)
+        return self.render_to_response(context)
+
+    def render_to_response(self, context, **response_kwargs):
+        response_kwargs.setdefault('content_type', self.content_type)
+        return self.response_class(
+            request=self.request,
+            template=self.get_template_names(),
+            context=context,
+            using=self.template_engine,
+            **response_kwargs,
+        )
 
 
 class MachineListView(ListView):

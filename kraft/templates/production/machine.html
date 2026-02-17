@@ -3,21 +3,17 @@
 Оборудование на производстве
 {% endblock %} 
 {% block content %}
-<div class="container mt-4">
-    <h1>Главная страница производства</h1>
-    <hr>
-
-    <div class="row">
-        <div class="col-md-4">
-            <h2><a href="{% url 'production:machine_list' %}">Машины</a></h2>
-            <ul>
-                {% for machine in machines|slice:":5" %}
-                    <li><a href="{% url 'production:machine_detail' pk=machine.pk %}">{{ machine.name }}</a></li>
-                {% empty %}
-                    <li>Нет доступных машин.</li>
-                {% endfor %}
-            </ul>
-        </div>
-    </div>
+<div class="content_main">
+  <h1>Оборудование</h1>
+  <section class="products">
+    {% for machine in machines|slice:":5" %}
+    <article class="product-card">
+      <h3>{{ machine }}</h3>
+      <a class="btn-card" href="{% url 'production:machine_detail' pk=machine.pk %}">Подробнее</a>
+    </article>
+    {% empty %}
+      <li>Нет доступных машин.</li>
+    {% endfor %}
+  </section>
 </div>
 {% endblock %}

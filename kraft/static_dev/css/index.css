@@ -120,6 +120,10 @@ body {
     color: #3e6159;
 }
 
+.product-card a {
+    margin-top: auto;
+}
+
 .btn-card {
     display: inline-block;
     background-color: #064e1a;
@@ -138,14 +142,19 @@ body {
     transform: translateY(-5px) translateX(5px); /* подъем карточки на 5 пикселей */
 }
 
+.content_main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.content_main h1 {
+    margin-bottom: 20px;
+}
 /* -------------- Animation -------------- */
 
 @media screen and (max-width: 659px) {
 
-    body {
-        background-color: rgb(160, 232, 181);
-        min-width: 550px;
-    }
     
     /* --- Стили для анимированного меню --- */
 
@@ -226,6 +235,7 @@ body {
     list-style: none;
     text-align: center;
     padding: 0;
+    flex-direction: column
     }
 
     .nav-main-header ul li {
@@ -266,3 +276,5 @@ body {
 
 /* --------- End of media --------- */
 }
+
+/* --------- Animation Card --------- */
