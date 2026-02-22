@@ -1,6 +1,5 @@
 name: Deploy to Production Server
 
-# Триггер: запускать этот workflow при пуше в ветку main
 on:
   push:
     branches:
@@ -22,5 +21,5 @@ jobs:
           passphrases: ${{ secrets.SSH_PASSPHRASE }}
           script: |
             cd /root/yu/kraft/
+            mkdir newfolder
             git pull origin main
-            echo "Deployment completed successfully!"
