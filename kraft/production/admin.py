@@ -42,7 +42,7 @@ class WorkingShiftAdmin(admin.ModelAdmin):
     """
     inlines = (MarriageInline,)
     list_display = (
-        'date', 'machine', 'plan', 'done',
+        'date', 'machine', 'plan', 'done', 'order'
     )
     list_editable = (
         'done',
