@@ -19,6 +19,7 @@ jobs:
           host: ${{ secrets.SERVER_HOST }}
           username: ${{ secrets.SERVER_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
+          passphrases: ${{ secrets.SSH_PASSPHRASE }}
           script: |
             cd /root/yu/kraft/
             git pull origin main
