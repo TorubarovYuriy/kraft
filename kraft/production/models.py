@@ -264,7 +264,13 @@ class WorkingShift(models.Model):
         ordering = ['-date']
 
     def __str__(self):
-        return f'Смена от {self.date}.'
+        months = {
+            1: 'янв', 2: 'фев', 3: 'мар', 4: 'апр',
+            5: 'мая', 6: 'июн', 7: 'июл', 8: 'авг',
+            9: 'сен', 10: 'окт', 11: 'ноя', 12: 'дек'
+        }
+        date = self.date
+        return f'Смена от {date.day} {months[date.month]} {date.year} года'
 
     def save(self, *args, **kwargs):
         """
@@ -272,17 +278,41 @@ class WorkingShift(models.Model):
         продолжительности смены.
         """
         if self.time_start and self.time_end:
-            # Создаем объекты datetime, используя любую дату
-            # (например, сегодняшнюю),
-            # так как для вычисления разницы важны только временные компоненты.
             start_dt = datetime.combine(self.date, self.time_start)
             end_dt = datetime.combine(self.date, self.time_end)
-
-            # Обрабатываем случай, когда смена переходит через полночь
             if end_dt <= start_dt:
                 end_dt += timedelta(days=1)
 
             duration = end_dt - start_dt
-            # Сохраняем продолжительность в часах как число с плавающей точкой
             self.time_delta = duration.total_seconds() / 3600
         super().save(*args, **kwargs)
+
+
+class ImageShiftAct(models.Model):
+    """
+    Docstring для ImageShiftAct
+        image - изображение
+        working_shift - рабочая смена
+    Класс описывает изображение рабочей смены.
+    """
+    image = models.ImageField(
+        'Фото акта', upload_to='shift_acts/%Y/%m/%d/', null=True, blank=True,
+    )
+    working_shift = models.ForeignKey(
+        WorkingShift, on_delete=models.CASCADE, verbose_name='рабочая смена'
+    )
+    title = models.CharField(max_length=255, null=True, blank=True)
+    uploaded_at = models.DateTimeField(
+        'Дата загрузки', auto_now_add=True,
+    )
+
+    class Meta:
+        verbose_name = 'Фото акта'
+        verbose_name_plural = 'Фото актов'
+        ordering = (
+            '-uploaded_at',
+        )
+
+    def __str__(self):
+        return f'Акт смены {self.working_shift} от ' \
+            f'{self.working_shift.date}'

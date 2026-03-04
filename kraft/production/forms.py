@@ -1,5 +1,5 @@
 from django import forms
-from .models import WorkingShift
+from .models import WorkingShift, ImageShiftAct
 
 
 class WorkingShiftForm(forms.ModelForm):
@@ -7,13 +7,11 @@ class WorkingShiftForm(forms.ModelForm):
 
     class Meta:
         model = WorkingShift
-        # Указываем поля, которые будут в форме
         fields = [
             'date', 'machine', 'order', 'users', 'work', 'rolls',
             'plan', 'done', 'box', 'count_box', 'clue', 'count_clue',
             'time_start', 'time_end'
         ]
-        # Используем виджеты для более удобного ввода данных
         widgets = {
             'date': forms.DateInput(
                 attrs={'type': 'date', 'class': 'form-control'}
@@ -24,13 +22,9 @@ class WorkingShiftForm(forms.ModelForm):
             'time_end': forms.TimeInput(
                 attrs={'type': 'time', 'class': 'form-control'}
             ),
-            # Для полей ManyToMany используем CheckboxSelectMultiple
-            # для наглядного выбора нескольких вариантов
             'users': forms.CheckboxSelectMultiple(),
             'work': forms.CheckboxSelectMultiple(),
             'rolls': forms.CheckboxSelectMultiple(),
-            # Для остальных полей можно оставить виджеты по умолчанию
-            # или добавить им класс для стилизации
             'machine': forms.Select(attrs={'class': 'form-control'}),
             'order': forms.Select(attrs={'class': 'form-control'}),
             'plan': forms.NumberInput(attrs={'class': 'form-control'}),
@@ -43,10 +37,6 @@ class WorkingShiftForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        # Поле 'rolls' может содержать много записей,
-        # сделаем его необязательным
-        # для более удобного начального создания смены.
-        # Рулоны можно будет добавить позже на странице редактирования.
         self.fields['rolls'].required = False
 
 
@@ -55,13 +45,11 @@ class WorkingShiftEditForm(forms.ModelForm):
 
     class Meta:
         model = WorkingShift
-        # Указываем поля, которые будут в форме
         fields = [
             'date', 'machine', 'order', 'users', 'work', 'rolls',
             'plan', 'done', 'box', 'count_box', 'clue', 'count_clue',
             'time_start', 'time_end'
         ]
-        # Используем виджеты для более удобного ввода данных
         widgets = {
             'date': forms.DateInput(
                 attrs={'type': 'date', 'class': 'form-control'}
@@ -72,13 +60,8 @@ class WorkingShiftEditForm(forms.ModelForm):
             'time_end': forms.TimeInput(
                 attrs={'type': 'time', 'class': 'form-control'}
             ),
-            # Для полей ManyToMany используем CheckboxSelectMultiple
-            # для наглядного выбора нескольких вариантов
             'users': forms.CheckboxSelectMultiple(),
             'work': forms.CheckboxSelectMultiple(),
-            'rolls': forms.CheckboxSelectMultiple(),
-            # Для остальных полей можно оставить виджеты по умолчанию
-            # или добавить им класс для стилизации
             'machine': forms.Select(attrs={'class': 'form-control'}),
             'order': forms.Select(attrs={'class': 'form-control'}),
             'plan': forms.NumberInput(attrs={'class': 'form-control'}),
@@ -88,3 +71,21 @@ class WorkingShiftEditForm(forms.ModelForm):
             'clue': forms.Select(attrs={'class': 'form-control'}),
             'count_clue': forms.NumberInput(attrs={'class': 'form-control'}),
         }
+
+
+class ImageShiftActForm(forms.ModelForm):
+    """Форма для загрузки изображений для акта смены."""
+
+    class Meta:
+        model = ImageShiftAct
+        fields = ('image', 'title')
+
+
+class ImageShiftActFormSet(forms.BaseInlineFormSet):
+    def clean(self):
+        super().clean()
+        images_count = sum(
+            1 for form in self.forms if not form.cleaned_data.get('DELETE')
+        )
+        if images_count < 2:
+            raise forms.ValidationError('Добавьте минимум 2 изображения.')

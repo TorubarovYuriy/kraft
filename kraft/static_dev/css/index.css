@@ -16,7 +16,7 @@ body {
 .base_page {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    grid-template-rows: auto;
+    grid-template-rows: auto 1fr auto;
     gap: 8px;
     grid-template-areas: 
     "header header header"
@@ -26,17 +26,16 @@ body {
 
 .base_page header {
     grid-area: header;
-    align-content: top;
 }
 
 .base_page main {
     grid-area: main;
-    align-content: top;
+    min-height: 80vh;
 }
 
 .base_page footer {
     grid-area: footer;
-    align-content: end;
+    background-color: #3e6159;
 }
 
 /* -------------- Header -------------- */
@@ -95,9 +94,10 @@ body {
 .product-card {
     display: flex;
     flex-direction: column;
+    align-items: center;
     width: 300px;
     background-color: rgba(39, 131, 11, 0.682);
-    box-shadow: 0 2px 5px rgba(231, 10, 10, 0.837);
+    box-shadow: 0 2px 5px rgb(1, 174, 82);
     overflow: hidden;
     border-radius: 5px;
     cursor: pointer;
@@ -151,6 +151,11 @@ body {
 .content_main h1 {
     margin-bottom: 20px;
 }
+
+.btn {
+    margin-bottom: 20px;
+}
+
 /* -------------- Animation -------------- */
 
 @media screen and (max-width: 659px) {
@@ -278,3 +283,55 @@ body {
 }
 
 /* --------- Animation Card --------- */
+
+
+/* --------- form смены --------- */
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center; 
+}
+
+.container h1 {
+    margin-bottom: 10px;
+}
+
+.working-shift-form {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 5px;
+    border-radius: 5px;
+    background-color: #1d6f0e;
+    width: 500px;
+}
+
+.form-section {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+    gap: 5px;
+    width: 100%;
+    padding-left: 5px;
+}
+
+.form-row {
+    display: flex;
+    flex-direction: column;
+    align-items: space-around;
+    margin-right: 5px;
+}
+
+.form-control {
+    width: 300px;
+    background-color: #a9d6b5;
+}
+
+.col-md-6 {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+/* --------- End of form --------- */

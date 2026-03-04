@@ -5,21 +5,22 @@
 {% block content %}
 <div class="content_main">
   <h1>Смены</h1>
+  <a href="{% url 'production:working_shift_create' %}" class="btn btn-card">Добавить новую смену</a>
   <section class="products">
     {% for shift in working_shifts|slice:":6" %}
     <article class="product-card">
       <img src="#" alt="Здесь будет изображение">
+      <div>{{ shift.image }}</div>
       <h3>{{ shift.date }}</h3>
       <h4>{{ shift.machine }}</h4>
       <p>Выполнено {{ shift.done }}</p>
       <span>{{ shift.order }}</span>
-      <a href="#" class="btn-card">Подробнее</a>
+      <a href="{% url 'production:working_shift_edit' shift.id %}" class="btn-card">Редактировать</a>
     </article>
     {% empty %}
       <li>Нет доступных смен.</li>
     {% endfor %}
     
   </section>
-  <a href="{% url 'production:working_shift_create' %}" class="btn btn-success">Добавить новую смену</a>
 </div>
 {% endblock %}

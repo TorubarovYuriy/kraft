@@ -22,6 +22,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django_bootstrap5',
     'users.apps.UsersConfig',
     'production.apps.ProductionConfig',
 ]
@@ -97,3 +98,7 @@ STATICFILES_DIRS = [
 STATIC_URL = '/static/'
 
 STATIC_ROOT = BASE_DIR / 'collected_static'
+
+MEDIA_ROOT = BASE_DIR / 'media'
+MEDIA_URL = '/media/'
+FILE_UPLOAD_MAX_MEMORY_SIZE = 5 * 1024 * 1024

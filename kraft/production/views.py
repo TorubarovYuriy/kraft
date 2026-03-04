@@ -2,9 +2,19 @@ from typing import Any
 from django.views.generic import DetailView, ListView, TemplateView
 from django.shortcuts import redirect, render, get_object_or_404
 from django.urls import reverse
+from django.forms import inlineformset_factory
 
-from .models import Clue, Machine, Order, WorkingShift
-from .forms import WorkingShiftForm, WorkingShiftEditForm
+from .models import Clue, Machine, Order, WorkingShift, ImageShiftAct
+from .forms import WorkingShiftForm, WorkingShiftEditForm, ImageShiftActForm
+
+
+ImageFormSet = inlineformset_factory(
+    WorkingShift,
+    ImageShiftAct,
+    form=ImageShiftActForm,
+    extra=3,
+    can_delete=True,
+)
 
 
 class ProductionMainView(TemplateView):
@@ -15,22 +25,7 @@ class ProductionMainView(TemplateView):
     def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
         context = super().get_context_data(**kwargs)
         context['title'] = 'Производство'
-        context['forms'] = WorkingShiftEditForm()
         return context
-
-    def get(self, request, *args, **kwargs):
-        context = self.get_context_data(**kwargs)
-        return self.render_to_response(context)
-
-    def render_to_response(self, context, **response_kwargs):
-        response_kwargs.setdefault('content_type', self.content_type)
-        return self.response_class(
-            request=self.request,
-            template=self.get_template_names(),
-            context=context,
-            using=self.template_engine,
-            **response_kwargs,
-        )
 
 
 class MachineListView(ListView):
@@ -88,6 +83,7 @@ class WorkingShiftListView(ListView):
     def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
         context = super().get_context_data(**kwargs)
         context['working_shifts'] = WorkingShift.objects.all()
+        context['images'] = ImageShiftAct.objects.all()
         return context
 
 # ******************
@@ -99,8 +95,7 @@ def working_shift_create(request):
         form = WorkingShiftForm(request.POST)
         if form.is_valid():
             form.save()
-            # Перенаправляем на страницу со списком смен после успешного создания
-            return redirect('production:working_shift_list') # Убедитесь, что у вас есть такой url name
+            return redirect('production:working_shift')
     else:
         form = WorkingShiftForm()
 
@@ -119,7 +114,7 @@ def working_shift_edit(request, pk):
         form = WorkingShiftForm(request.POST, instance=shift)
         if form.is_valid():
             form.save()
-            return redirect('production:working_shift_list')
+            return redirect('production:working_shift')
     else:
         form = WorkingShiftForm(instance=shift)
 
@@ -129,3 +124,29 @@ def working_shift_edit(request, pk):
         'is_edit': True
     }
     return render(request, 'production/working_shift_form.html', context)
+
+
+def create_object(request):
+    if request.method == 'POST':
+        form = WorkingShiftForm(request.POST)
+        formset = ImageFormSet(request.POST, request.FILES)
+
+        if form.is_valid() and formset.is_valid():
+            obj = form.save()
+            formset.instance = obj
+            formset.save()
+            return redirect('object_detail', pk=obj.pk)
+    else:
+        form = WorkingShiftForm()
+        formset = ImageFormSet()
+
+    return render(
+        request,
+        'production/create_object.html',
+        {'form': form, 'formset': formset}
+    )
+
+
+def object_detail(request, pk):
+    obj = get_object_or_404(WorkingShift, pk=pk)
+    return render(request, 'production/detail_object.html', {'object': obj})
