@@ -304,7 +304,7 @@ body {
     gap: 5px;
     border-radius: 5px;
     background-color: #1d6f0e;
-    width: 500px;
+    width: 80vw;
 }
 
 .form-section {
@@ -324,7 +324,7 @@ body {
 }
 
 .form-control {
-    width: 300px;
+    width: 30vh;
     background-color: #a9d6b5;
 }
 

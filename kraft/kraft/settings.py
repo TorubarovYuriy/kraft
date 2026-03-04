@@ -95,7 +95,7 @@ STATICFILES_DIRS = [
     BASE_DIR / 'static_dev',
 ]
 
-STATIC_URL = '/static/'
+STATIC_URL = '/collected_static/'
 
 STATIC_ROOT = BASE_DIR / 'collected_static'
 
