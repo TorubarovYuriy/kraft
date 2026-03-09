@@ -304,7 +304,7 @@ body {
     gap: 5px;
     border-radius: 5px;
     background-color: #1d6f0e;
-    width: 80vw;
+    width: min(80vw, 500px);
 }
 
 .form-section {

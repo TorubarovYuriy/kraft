@@ -1,8 +1,9 @@
 from typing import Any
 from django.views.generic import DetailView, ListView, TemplateView
 from django.shortcuts import redirect, render, get_object_or_404
-from django.urls import reverse
 from django.forms import inlineformset_factory
+from django.db.models import Sum
+from django.db.models.functions import Coalesce
 
 from .models import Clue, Machine, Order, WorkingShift, ImageShiftAct
 from .forms import WorkingShiftForm, WorkingShiftEditForm, ImageShiftActForm
@@ -50,11 +51,12 @@ class MachineDetailView(DetailView):
 class OrderListView(ListView):
     model = Order
     template_name = 'production/order.html'
+    context_object_name = 'orders'
 
-    def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
-        context = super().get_context_data(**kwargs)
-        context['orders'] = Order.objects.all().order_by('-name')
-        return context
+    def get_queryset(self):
+        return Order.objects.annotate(
+            total_done=Coalesce(Sum('workingshift__done'), 0)
+        ).order_by('-id')
 
 
 class OrderDetailView(DetailView):

@@ -230,7 +230,7 @@ class WorkingShift(models.Model):
     )
     order = models.ForeignKey(
         Order, on_delete=models.SET_NULL, null=True, blank=True,
-        verbose_name='заказ',
+        verbose_name='заказ', related_name='workingshift',
     )
     work = models.ManyToManyField(Work, verbose_name='Работы')
     plan = models.IntegerField(
