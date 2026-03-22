@@ -301,7 +301,9 @@ class ImageShiftAct(models.Model):
     working_shift = models.ForeignKey(
         WorkingShift, on_delete=models.CASCADE, verbose_name='рабочая смена'
     )
-    title = models.CharField(max_length=255, null=True, blank=True)
+    title = models.CharField(
+        max_length=255, null=True, blank=True, verbose_name='Описание'
+    )
     uploaded_at = models.DateTimeField(
         'Дата загрузки', auto_now_add=True,
     )

@@ -69,6 +69,7 @@ class ImageShiftActInline(admin.ModelAdmin):
         'image', 'working_shift'
     )
     search_fields = ('working_shift',)
+    ordering = ('working_shift',)
 
 
 admin.site.register(

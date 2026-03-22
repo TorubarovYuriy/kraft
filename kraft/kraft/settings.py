@@ -102,3 +102,7 @@ STATIC_ROOT = BASE_DIR / 'collected_static'
 MEDIA_ROOT = BASE_DIR / 'media'
 MEDIA_URL = '/media/'
 FILE_UPLOAD_MAX_MEMORY_SIZE = 5 * 1024 * 1024
+
+CSRF_TRUSTED_ORIGINS = (
+    'https://sofekt.ru',
+)
