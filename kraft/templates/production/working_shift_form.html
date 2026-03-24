@@ -90,14 +90,16 @@
     </div>
     
     <div class="form-actions">
-      <button type="submit" class="btn btn-primary">
+      <button type="submit" class="btn-primary">
         {% if is_edit %}
           Сохранить изменения
         {% else %}
           Добавить смену
         {% endif %}
       </button>
-      <a href="{% url 'production:working_shift' %}" class="btn btn-secondary">Отмена</a>
+      <button type="submit" class="btn-secondary">
+        <a href="{% url 'production:working_shift' %}">Отмена</a>
+      </button>
     </div>
   </form>
 </div>

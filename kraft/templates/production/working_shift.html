@@ -9,8 +9,6 @@
   <section class="products">
     {% for shift in working_shifts|slice:":6" %}
     <article class="product-card">
-      <img src="#" alt="Здесь будет изображение">
-      <div>{{ shift.image }}</div>
       <h3>{{ shift.date }}</h3>
       <h4>{{ shift.machine }}</h4>
       <p>Выполнено {{ shift.done }}</p>

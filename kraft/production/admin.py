@@ -12,7 +12,8 @@ class OrderAdmin(admin.ModelAdmin):
     Docstring для OrderAdmin
     Вспомогательные настройки для модели Order
     """
-    list_display = ('name', 'count')
+    list_display = ('name', 'count', 'package_size', 'weight_one_piece')
+    list_editable = ('count',)
 
 
 class RollAdmin(admin.ModelAdmin):

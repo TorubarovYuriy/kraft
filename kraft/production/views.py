@@ -85,7 +85,6 @@ class WorkingShiftListView(ListView):
     def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
         context = super().get_context_data(**kwargs)
         context['working_shifts'] = WorkingShift.objects.all()
-        context['images'] = ImageShiftAct.objects.all()
         return context
 
 # ******************

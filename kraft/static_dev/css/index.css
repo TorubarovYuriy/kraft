@@ -89,6 +89,7 @@ body {
     flex-wrap: wrap;
     gap: 20px;
     justify-content: space-around;
+    max-width: 1100px;
 }
 
 .product-card {
@@ -281,8 +282,9 @@ body {
     top: 0;
     }
 
-/* --------- End of media --------- */
 }
+/* --------- End of media --------- */
+
 
 /* --------- Animation Card --------- */
 
@@ -305,7 +307,7 @@ body {
     justify-content: center;
     gap: 5px;
     border-radius: 5px;
-    background-color: #1d6f0e;
+    background-color: rgba(39, 131, 11, 0.682);
     width: min(80vw, 500px);
 }
 
@@ -335,5 +337,24 @@ body {
     flex-direction: row;
     justify-content: space-between;
 }
+
+.btn-primary, .btn-secondary {
+    width: 100%;
+    background-color: #a9d6b5;
+}
+
+.btn-secondary {
+    margin: 10px 0px 5px 0px;
+}
+
+.btn-primary:hover, .btn-secondary:hover {
+    background-color: #d6bda9;
+}
+
+.btn-secondary a {
+    text-decoration: none;
+    color: black;
+}
+
 
 /* --------- End of form --------- */
