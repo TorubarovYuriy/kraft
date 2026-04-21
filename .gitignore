@@ -141,3 +141,5 @@ media/
 kraft/kraft/__pycache__/settings.cpython-312.pyc
 kraft/kraft/__pycache__/settings.cpython-312.pyc
 kraft/datadump_15_02_26.json
+start_django.bat
+.gigaide/gigaide.properties
