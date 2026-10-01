@@ -25,6 +25,7 @@ INSTALLED_APPS = [
     'django_bootstrap5',
     'users.apps.UsersConfig',
     'production.apps.ProductionConfig',
+    'rest_framework'
 ]
 
 MIDDLEWARE = [
@@ -106,3 +107,10 @@ FILE_UPLOAD_MAX_MEMORY_SIZE = 5 * 1024 * 1024
 CSRF_TRUSTED_ORIGINS = (
     'https://sofekt.ru',
 )
+
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
+    ],
+    'PAGE_SIZE': 6,
+}
